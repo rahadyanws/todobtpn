@@ -1,0 +1,249 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Swagger ToDo List",
+        "description": "A sample API that uses a ToDo List",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Swagger API Team"
+        },
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "host": "localhost:3000/todos",
+    "basePath": "",
+    "tags": [
+        {
+            "name": "ToDo",
+            "description": "API for ToDo List in the system"
+        }
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths":{
+        "/":{
+           "get":{
+              "description":"Returns all todo list from the system that the user has access to",
+              "operationId":"getAllTodo",
+              "produces":[
+                 "application/json",
+                 "application/xml",
+                 "text/xml",
+                 "text/html"
+              ],
+              "responses":{
+                 "200":{
+                    "description":"todo response",
+                    "schema":{
+                       "type":"array",
+                       "items":{
+                          "$ref":"#/definitions/ResToDo"
+                       }
+                    }
+                 }
+              }
+           },
+           "post":{
+            "description":"Creates a new todo in the store. Duplicates are not allowed",
+            "operationId":"CreateTodo",
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"todo",
+                  "in":"body",
+                  "description":"ToDo to add to the store",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/BodyToDo"
+                  }
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"todo response",
+                  "schema":{
+                     "$ref":"#/definitions/ResToDo"
+                  }
+               }
+            }
+         }
+        },
+        "/{id}":{
+            "get":{
+               "description":"Returns a user based on a single ID, if the user does not have access to the todo",
+               "operationId":"findTodoById",
+               "produces":[
+                  "application/json",
+                  "application/xml",
+                  "text/xml",
+                  "text/html"
+               ],
+               "parameters":[
+                  {
+                     "name":"id",
+                     "in":"path",
+                     "description":"ID of todo to fetch",
+                     "required":true,
+                     "type":"string"
+                  }
+               ],
+               "responses":{
+                  "200":{
+                     "description":"todo response",
+                     "schema":{
+                        "$ref":"#/definitions/ResToDo"
+                     }
+                  }
+               }
+            },
+            "put":{
+                "description":"Update a single todo based on the ID supplied",
+                "operationId":"updateTodoById",
+                "produces":[
+                   "application/json",
+                   "application/xml",
+                   "text/xml",
+                   "text/html"
+                ],
+                "parameters":[
+                   {
+                      "name":"id",
+                      "in":"path",
+                      "description":"ID of todo to fetch",
+                      "required":true,
+                      "type":"string"
+                   },
+                   {
+                    "name":"todo",
+                    "in":"body",
+                    "description":"ToDo to update to the store",
+                    "required":true,
+                    "schema":{
+                       "$ref":"#/definitions/BodyToDo"
+                    }
+                 }
+                ],
+                "responses":{
+                   "200":{
+                      "description":"todo response",
+                      "schema":{
+                         "$ref":"#/definitions/ResToDo"
+                      }
+                   }
+                }
+             },
+            "delete":{
+               "description":"deletes a single todo based on the ID supplied",
+               "operationId":"deleteTodo",
+               "parameters":[
+                  {
+                     "name":"id",
+                     "in":"path",
+                     "description":"ID of todo to delete",
+                     "required":true,
+                     "type":"string"
+                  }
+               ],
+               "responses":{
+                  "204":{
+                     "description":"todo deleted"
+                  }
+               }
+            }
+         }
+     },
+    "definitions": {
+        "id": {
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "messgae": {
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "ToDo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "firstname": {
+                    "type": "string"
+                },
+                "lastname": {
+                    "type": "string"
+                },
+                "age": {
+                    "type": "integer"
+                },
+                "photo": {
+                    "type": "string"
+                }
+            }
+        },
+        "BodyToDo": {
+            "type": "object",
+            "properties": {
+                "firstname": {
+                    "type": "string"
+                },
+                "lastname": {
+                    "type": "string"
+                },
+                "age": {
+                    "type": "integer"
+                },
+                "photo": {
+                    "type": "string"
+                }
+            }
+        },
+        "ResToDo": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "firstname": {
+                            "type": "string"
+                        },
+                        "lastname": {
+                            "type": "string"
+                        },
+                        "age": {
+                            "type": "integer"
+                        },
+                        "photo": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
